@@ -22,6 +22,7 @@ public class Main {
 	
 	}
 	
+	//时间复杂度为O(n)
 	public static int[] countBits3(int num) {
 		int[] result = new int[num + 1];
 		for (int i = 1; i <= num; ++i) {
@@ -31,6 +32,7 @@ public class Main {
 		return result;
 	}
 
+	//时间复杂度为O(n)
 	public static int[] countBits2(int num) {
 		int[] result = new int[num + 1];
 		for (int i = 1; i <= num; ++i) {
@@ -40,6 +42,7 @@ public class Main {
 		return result;
 	}
 
+	//时间复杂度为O(kn) k=n+1
 	public static int[] countBits1(int num) {
 		int[] result = new int[num + 1];
 		for (int i = 0; i <= num; ++i) {
