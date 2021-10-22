@@ -1,6 +1,6 @@
 /.settings/
 /target/
- 
+.metadata/* 
 # built application files
 *.apk
 *.ap_

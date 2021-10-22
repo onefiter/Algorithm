@@ -1,6 +1,5 @@
 package com.onefiter;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.IconifyAction;
 
 public class ListNode {
 	public int val;
@@ -41,7 +40,7 @@ public class ListNode {
 		
 	}
 	
-	public ListNode delete(ListNode head, int value) {
+	public ListNode delete1(ListNode head, int value) {
 		
 		if (head == null) {
 			return head;
@@ -62,5 +61,23 @@ public class ListNode {
 		}
 		return head;
 	}
+	
+	public ListNode delete(ListNode head, int value) {
+		
+		ListNode dummy = new ListNode(0);
+		dummy.next = head;
+	
+		ListNode node = dummy;
+		while (node.next != null) {
+			if (node.next.val == value ) {
+				node.next = node.next.next;
+				break;	
+			}
+	
+			node = node.next;
+		}
+		return head;
+	}
+	
 	
 }
