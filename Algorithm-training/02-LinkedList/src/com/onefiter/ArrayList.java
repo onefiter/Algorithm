@@ -1,31 +1,18 @@
 package com.onefiter;
 
 @SuppressWarnings("unchecked")
-public class ArrayList<E> {
-	/**
-	 * 元素的数量
-	 */
-	private int size;
+public class ArrayList<E> extends AbstractList<E> {
 	/**
 	 * 所有的元素
 	 */
 	private E[] elements;
-	
 	private static final int DEFAULT_CAPACITY = 10;
-	private static final int ELEMENT_NOT_FOUND = -1;
 	
-	/**
-	 * 有参构造函数
-	 * @param capaticy
-	 */
 	public ArrayList(int capaticy) {
 		capaticy = (capaticy < DEFAULT_CAPACITY) ? DEFAULT_CAPACITY : capaticy;
 		elements = (E[]) new Object[capaticy];
 	}
 	
-	/**
-	 * 无参构造函数
-	 */
 	public ArrayList() {
 		this(DEFAULT_CAPACITY);
 	}
@@ -41,46 +28,14 @@ public class ArrayList<E> {
 	}
 
 	/**
-	 * 元素的数量
-	 * @return
-	 */
-	public int size() {
-		return size;
-	}
-
-	/**
-	 * 是否为空
-	 * @return
-	 */
-	public boolean isEmpty() {
-		 return size == 0;
-	}
-
-	/**
-	 * 是否包含某个元素
-	 * @param element
-	 * @return
-	 */
-	public boolean contains(E element) {
-		return indexOf(element) != ELEMENT_NOT_FOUND;
-	}
-
-	/**
-	 * 添加元素到尾部
-	 * @param element
-	 */
-	public void add(E element) {
-		add(size, element);
-	}
-
-	/**
 	 * 获取index位置的元素
 	 * @param index
 	 * @return
 	 */
-	public E get(int index) {
+	public E get(int index) { // O(1)
 		rangeCheck(index);
-		return elements[index];
+		
+		return elements[index]; 
 	}
 
 	/**
@@ -89,7 +44,7 @@ public class ArrayList<E> {
 	 * @param element
 	 * @return 原来的元素ֵ
 	 */
-	public E set(int index, E element) {
+	public E set(int index, E element) { // O(1)
 		rangeCheck(index);
 		
 		E old = elements[index];
@@ -102,7 +57,12 @@ public class ArrayList<E> {
 	 * @param index
 	 * @param element
 	 */
-	public void add(int index, E element) {
+	public void add(int index, E element) { 
+		/*
+		 * 最好：O(1)
+		 * 最坏：O(n)
+		 * 平均：O(n)
+		 */
 		rangeCheckForAdd(index);
 		
 		ensureCapacity(size + 1);
@@ -112,7 +72,7 @@ public class ArrayList<E> {
 		}
 		elements[index] = element;
 		size++;
-	}
+	} // size是数据规模
 
 	/**
 	 * 删除index位置的元素
@@ -120,6 +80,11 @@ public class ArrayList<E> {
 	 * @return
 	 */
 	public E remove(int index) {
+		/*
+		 * 最好：O(1)
+		 * 最坏：O(n)
+		 * 平均：O(n)
+		 */
 		rangeCheck(index);
 		
 		E old = elements[index];
@@ -136,18 +101,17 @@ public class ArrayList<E> {
 	 * @return
 	 */
 	public int indexOf(E element) {
-		if (element == null) {  // 1
+		if (element == null) {
 			for (int i = 0; i < size; i++) {
-				if (elements[i] == null) return i; 
+				if (elements[i] == null) return i;
 			}
 		} else {
 			for (int i = 0; i < size; i++) {
-				if (element.equals(elements[i])) return i; // n
+				if (element.equals(elements[i])) return i;
 			}
 		}
 		return ELEMENT_NOT_FOUND;
 	}
-	
 	
 	/**
 	 * 保证要有capacity的容量
@@ -157,7 +121,7 @@ public class ArrayList<E> {
 		int oldCapacity = elements.length;
 		if (oldCapacity >= capacity) return;
 		
-		// 新容量为旧容量的1.5倍，位运算的效率会比浮点运算的效率要高
+		// 新容量为旧容量的1.5倍
 		int newCapacity = oldCapacity + (oldCapacity >> 1);
 		E[] newElements = (E[]) new Object[newCapacity];
 		for (int i = 0; i < size; i++) {
@@ -168,25 +132,9 @@ public class ArrayList<E> {
 		System.out.println(oldCapacity + "扩容为" + newCapacity);
 	}
 	
-	private void outOfBounds(int index) {
-		throw new IndexOutOfBoundsException("Index:" + index + ", Size:" + size);
-	}
-	
-	private void rangeCheck(int index) {
-		if (index < 0 || index >= size) {
-			outOfBounds(index);
-		}
-	}
-	
-	private void rangeCheckForAdd(int index) {
-		if (index < 0 || index > size) {
-			outOfBounds(index);
-		}
-	}
-	
 	@Override
 	public String toString() {
-	
+		// size=3, [99, 88, 77]
 		StringBuilder string = new StringBuilder();
 		string.append("size=").append(size).append(", [");
 		for (int i = 0; i < size; i++) {
@@ -196,7 +144,9 @@ public class ArrayList<E> {
 			
 			string.append(elements[i]);
 			
-
+//			if (i != size - 1) {
+//				string.append(", ");
+//			}
 		}
 		string.append("]");
 		return string.toString();
